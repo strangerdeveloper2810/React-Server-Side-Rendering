@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"webpack --config webpack.client.config.ts --mode development\" \"webpack --config webpack.server.config.ts --mode development --watch\" \"nodemon\"",
+    "start": "concurrently \"nodemon src/server.ts\" \"wait-on http://localhost:3000 && webpack --config webpack.client.config.ts --mode development\"",
     "build": "webpack --config webpack.client.config.ts --mode production"
   },
   "keywords": [],
@@ -15,7 +15,8 @@
     "nodemon": "^3.1.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "ts-loader": "^9.5.1"
+    "ts-loader": "^9.5.1",
+    "wait-on": "^8.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
