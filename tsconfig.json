@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Bạn có thể giữ nguyên ES6, nhưng có thể cân nhắc chuyển sang ES2020 nếu cần tính năng mới hơn.
+    "module": "commonjs", // Để phù hợp với môi trường Node.js
+    "strict": true, // Giúp kiểm tra lỗi nghiêm ngặt hơn
+    "esModuleInterop": true, // Đảm bảo rằng việc import module sẽ hoạt động mượt mà
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist", // Đầu ra của các tệp biên dịch
+    "resolveJsonModule": true, // Cho phép import file JSON
+    "jsx": "react", // Để hỗ trợ JSX trong React
+    "moduleResolution": "node", // Giúp TypeScript nhận diện module của Node.js
+    "types": ["node", "webpack-env"] // Thêm "node" để nhận diện các kiểu của Node.js
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "webpack.client.config.ts" // Bao gồm tệp cấu hình Webpack
+  ],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,10 @@
+{
+  "presets": [
+    "@babel/preset-env", // Dùng để biên dịch ES6+ xuống ES5
+    "@babel/preset-react", // Dùng để biên dịch JSX
+    "@babel/preset-typescript" // Dùng để biên dịch TypeScript
+  ],
+  "plugins": [
+    "react-refresh/babel" // Cần thiết cho React Fast Refresh nếu bạn dùng trong môi trường phát triển
+  ]
+}
