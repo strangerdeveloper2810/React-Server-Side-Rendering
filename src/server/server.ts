@@ -1,31 +1,26 @@
 import express from "express";
-import webpack from "webpack";
-import webpackDevMiddleware from "webpack-dev-middleware";
-import webpackHotMiddleware from "webpack-hot-middleware";
-import webpackConfig from "../../webpack.client.config";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import App from "../client/App";
+import App from "@client/App";
+import http from "http";
+import hmr from "node-hmr"; // Thêm node-hmr để theo dõi sự thay đổi
 
 const app = express();
 const PORT = 3000;
 
-// Cấu hình Webpack compiler
-const compiler = webpack(webpackConfig);
+let currentApp = App; // Khởi tạo ứng dụng React
 
-if (process.env.NODE_ENV === "development") {
-  // Middleware DevServer và HMR
-  app.use(
-    webpackDevMiddleware(compiler, {
-      publicPath: webpackConfig.output?.publicPath || "/",
-    })
-  );
-  app.use(webpackHotMiddleware(compiler));
-}
+// Sử dụng node-hmr để theo dõi thay đổi và reload ứng dụng
+hmr(async () => {
+  console.log("Reloading App...");
+  ({ default: currentApp } = await import("../client/App")); // Tải lại App khi có thay đổi
+});
 
 // SSR: Render React từ phía server
 app.get("*", (req, res) => {
-  const content = ReactDOMServer.renderToString(React.createElement(App));
+  const content = ReactDOMServer.renderToString(
+    React.createElement(currentApp)
+  );
 
   res.send(`
     <!DOCTYPE html>
@@ -43,14 +38,9 @@ app.get("*", (req, res) => {
   `);
 });
 
-app.listen(PORT, () => {
+// Tạo server HTTP
+const server = http.createServer(app);
+
+server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
-
-if (module.hot) {
-  module.hot.accept("../client/App", () => {
-    console.log("Reloading App...");
-  });
-
-  module.hot.accept(); // Theo dõi các thay đổi của module
-}

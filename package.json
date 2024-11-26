@@ -2,9 +2,11 @@
   "name": "react-ssr",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"webpack --config webpack.client.config.ts --mode development\" \"webpack --config webpack.server.config.ts --mode development --watch\" \"ts-node src/server/server.ts\"",
+    "start": "concurrently \"node -r tsconfig-paths/register -r ts-node/register src/server/server.ts\"",
+    "dev": "node --loader ts-node/esm --require tsconfig-paths/register src/server/server.ts",
     "build": "webpack --config webpack.client.config.ts --mode production"
   },
   "keywords": [],
@@ -12,9 +14,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
+    "node-hmr": "^1.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "ts-loader": "^9.5.1"
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
@@ -31,7 +36,7 @@
     "concurrently": "^9.1.0",
     "http-proxy-middleware": "^3.0.3",
     "react-refresh": "^0.14.2",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",

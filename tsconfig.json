@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES6", // Bạn có thể giữ nguyên ES6, nhưng có thể cân nhắc chuyển sang ES2020 nếu cần tính năng mới hơn.
-    "module": "commonjs", // Để phù hợp với môi trường Node.js
+    "target": "ESNext", // Cập nhật để sử dụng tính năng ES mới hơn
+    "module": "ESNext", // Thay đổi từ "commonjs" sang "ESNext" để hỗ trợ import/export động
+    "moduleResolution": "node", // Giúp TypeScript nhận diện module của Node.js
     "strict": true, // Giúp kiểm tra lỗi nghiêm ngặt hơn
     "esModuleInterop": true, // Đảm bảo rằng việc import module sẽ hoạt động mượt mà
     "skipLibCheck": true,
@@ -9,13 +10,21 @@
     "outDir": "./dist", // Đầu ra của các tệp biên dịch
     "resolveJsonModule": true, // Cho phép import file JSON
     "jsx": "react", // Để hỗ trợ JSX trong React
-    "moduleResolution": "node", // Giúp TypeScript nhận diện module của Node.js
-    "types": ["node", "webpack-env"] // Thêm "node" để nhận diện các kiểu của Node.js
+    "types": ["node", "webpack-env"], // Không cần thêm "webpack-env" nữa vì bạn không dùng Webpack cho server
+    "lib": ["ES2020", "DOM"], // Thêm thư viện DOM nếu bạn làm việc với React SSR,
+    "baseUrl": "./src",
+    "paths": {
+      "@client/*": ["client/*"],
+      "@server/*": ["server/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "webpack.client.config.ts" // Bao gồm tệp cấu hình Webpack
+    "webpack.client.config.ts" // Bao gồm tệp cấu hình Webpack (dành cho client)
   ],
+  "ts-node": {
+    "esm": true
+  },
   "exclude": ["node_modules"]
 }
