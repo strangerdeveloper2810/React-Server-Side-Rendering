@@ -1,7 +1,7 @@
 import React from "react";
 
 const Home: React.FC = (): JSX.Element => {
-  return <>Home nè, React SSR</>;
+  return <>Config React SSR With Node Server</>;
 };
 
 export default Home;

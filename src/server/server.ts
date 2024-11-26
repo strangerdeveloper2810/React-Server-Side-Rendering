@@ -46,3 +46,11 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
+
+if (module.hot) {
+  module.hot.accept("../client/App", () => {
+    console.log("Reloading App...");
+  });
+
+  module.hot.accept(); // Theo dõi các thay đổi của module
+}
