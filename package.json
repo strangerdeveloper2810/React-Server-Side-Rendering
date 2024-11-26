@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"webpack --config webpack.client.config.ts --mode development\" \"webpack --config webpack.server.config.ts --mode development --watch\" \"ts-node src/server/server.ts\"",
+    "start": "concurrently \"webpack --config webpack.client.config.ts --mode development\" \"webpack --config webpack.server.config.ts --mode development --watch\" \"nodemon\"",
     "build": "webpack --config webpack.client.config.ts --mode production"
   },
   "keywords": [],
@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
+    "nodemon": "^3.1.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ts-loader": "^9.5.1"
