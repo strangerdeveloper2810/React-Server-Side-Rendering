@@ -2,31 +2,38 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-// WebSocket kết nối tới server tại ws://localhost:3000/ws
-const socket = new WebSocket("ws://localhost:3000/ws");
+let socket: WebSocket | null = null;
 
-socket.onopen = () => {
-  console.log("WebSocket connection established");
-};
+const connectWebSocket = () => {
+  // Kết nối lại WebSocket nếu bị mất kết nối
+  socket = new WebSocket("ws://localhost:3000/ws");
 
-socket.onmessage = (event) => {
-  if (event.data === "reload") {
-    console.log("Frontend content updated. Reloading...");
-    if (module.hot) {
-      module.hot.accept("./App"); // Kích hoạt hot reload trong module HMR
+  socket.onopen = () => {
+    console.log("WebSocket connection established");
+  };
+
+  socket.onmessage = (event) => {
+    if (event.data === "reload") {
+      console.log("Frontend content updated. Reloading...");
+      window.location.reload();
     }
-  }
+  };
+
+  socket.onerror = (error) => {
+    console.error("WebSocket error:", error);
+  };
+
+  socket.onclose = () => {
+    console.log("WebSocket connection closed. Reconnecting...");
+    // Tự động kết nối lại sau một khoảng thời gian
+    setTimeout(connectWebSocket, 3000); // Thử kết nối lại sau 3 giây
+  };
 };
 
-socket.onerror = (error) => {
-  console.error("WebSocket error:", error);
-};
+// Kết nối WebSocket
+connectWebSocket();
 
-socket.onclose = () => {
-  console.log("WebSocket connection closed");
-};
-
-// Thực hiện Hydrate nếu sử dụng SSR
+// Thực hiện Hydrate cho SSR
 const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.hydrateRoot(rootElement, <App />);

@@ -48,12 +48,11 @@ app.get("*", (req, res) => {
   `);
 });
 
-// Tạo WebSocket server để lắng nghe các kết nối từ client
 const server = app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
 
-// Lắng nghe WebSocket kết nối tại /ws
+// WebSocket upgrade để lắng nghe kết nối
 server.on("upgrade", (request, socket, head) => {
   if (request.url === "/ws") {
     wss.handleUpgrade(request, socket, head, (ws) => {
@@ -66,12 +65,12 @@ server.on("upgrade", (request, socket, head) => {
       });
     });
   } else {
-    socket.destroy(); // Nếu kết nối không phải /ws, hủy bỏ kết nối
+    socket.destroy();
   }
 });
 
 // Lắng nghe khi Webpack biên dịch xong
 compiler.hooks.done.tap("NotifyClients", () => {
   console.log("Frontend content updated. Notifying clients...");
-  clients.forEach((ws) => ws.send("reload")); // Gửi tín hiệu cập nhật tới client
+  clients.forEach((ws) => ws.send("reload"));
 });

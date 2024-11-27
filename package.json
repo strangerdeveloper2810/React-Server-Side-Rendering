@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pnpm concurrently \"nodemon --watch src/client --ext ts,tsx --exec 'ts-node src/server/server.ts'\" \"wait-on http://localhost:3000 && webpack --config webpack.client.config.ts --mode development\"",
+    "start": "pnpm concurrently \"nodemon --watch src/server --ext ts,tsx --exec 'ts-node src/server/server.ts'\" \"webpack --config webpack.client.config.ts --mode development --watch\"",
     "build": "webpack --config webpack.client.config.ts --mode production"
   },
   "keywords": [],
