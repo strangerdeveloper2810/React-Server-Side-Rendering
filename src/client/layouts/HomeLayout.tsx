@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Footer } from "../components";
+import { Header, Content, Footer } from "../components";
 
 interface HomeLayoutProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }): JSX.Element => {
   return (
     <div suppressHydrationWarning>
       <Header />
-      {children}
+      <Content>{children}</Content>
       <Footer />
     </div>
   );
