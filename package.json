@@ -4,31 +4,36 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"nodemon src/server.ts\" \"wait-on http://localhost:3000 && webpack --config webpack.client.config.ts --mode development\"",
+    "start": "pnpm concurrently \"nodemon --watch src/client --ext ts,tsx --exec 'ts-node src/server/server.ts'\" \"wait-on http://localhost:3000 && webpack --config webpack.client.config.ts --mode development\"",
     "build": "webpack --config webpack.client.config.ts --mode production"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.8",
     "express": "^4.21.1",
+    "history": "^5.3.0",
     "nodemon": "^3.1.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ts-loader": "^9.5.1",
-    "wait-on": "^8.0.1"
+    "wait-on": "^8.0.1",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "@types/express": "^5.0.0",
+    "@types/history": "^5.0.0",
     "@types/node": "^22.10.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/webpack-env": "^1.18.5",
     "@types/webpack-hot-middleware": "^2.25.9",
     "@types/webpack-node-externals": "^3.0.4",
+    "@types/ws": "^8.5.13",
     "babel-loader": "^9.2.1",
     "concurrently": "^9.1.0",
     "http-proxy-middleware": "^3.0.3",
