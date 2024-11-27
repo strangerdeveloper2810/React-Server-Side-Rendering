@@ -6,11 +6,11 @@ interface HomeLayoutProps {
 }
 const HomeLayout: React.FC<HomeLayoutProps> = ({ children }): JSX.Element => {
   return (
-    <>
+    <div suppressHydrationWarning>
       <Header />
       {children}
       <Footer />
-    </>
+    </div>
   );
 };
 
